@@ -34,7 +34,7 @@ Python3.7 or above
 
 ## Run the application!
 ```
-> ./src/main.py )
+> ./src/main.py
 
 # Note: Make sure you are running the command in the root directory of the repo
 

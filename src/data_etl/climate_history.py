@@ -3,7 +3,7 @@
 import csv
 import os
 
-from common.common import INDEX_NAME, CLIMATE_HISTORY_FIELDS
+from common.common import CLIMATE_HISTORY_FIELDS
 
 
 def load_climate_history(data_dir, file_type=".csv"):
