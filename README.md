@@ -30,11 +30,10 @@ Python3.7 or above
 1. Upgrade PIP, then install the relevant packages into the virtual env
 ```
 > pip3 install -r requirements.txt --upgrade pip
-
+```
 
 ## Run the application!
 ```
 > ./src/main.py
-
-# Note: Make sure you are running the command in the root directory of the repo
+```
 
