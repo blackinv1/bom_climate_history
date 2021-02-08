@@ -4,19 +4,7 @@ from datetime import datetime
 from elasticsearch_dsl import Document, Date, Keyword, GeoPoint
 import re
 
-INDEX_NAME = {"history": "bom_climate_history", "stations": "bom_stations"}
-
-SEP = "  "
-# The fields by sequence
-STATION_FIELDS = [
-    "id",
-    "state",
-    "rainfall_districts",
-    "name",
-    "date_opened",
-    "coordinates",
-]
-AUS_STATES = ["NSW", "VIC", "SA", "NT", "WA", "QLD", "TAS"]
+from common.common import INDEX_NAME, STATION_FIELDS
 
 
 def load_stations(stations_file):
@@ -29,6 +17,7 @@ def load_stations(stations_file):
 
     stations = []
     for row in content:
+        # Matching the pattern using regex
         values = re.split(
             "^([0-9]{6})\s+([A-Z]{2,3})\s+([a-zA-Z0-9_]{1,4})\s+([\s\S]+)\s+([0-9]{8})..\s+(-?[0-9]\d*(\.\d+))\s+(-?[0-9]\d*(\.\d+))",
             row.strip(),
@@ -61,7 +50,7 @@ def load_stations(stations_file):
 
     return stations
 
-def ingest_stations(stations, BOMStations, init_index=True):
+def ingest_stations(stations, BOMStations, init_index):
     """
     Ingest the stations data into ES
     """
@@ -81,20 +70,3 @@ def ingest_stations(stations, BOMStations, init_index=True):
         document.save()
 
 
-class BOMStations(Document):
-    id = Keyword(required=True)
-    name = Keyword(required=True)
-    state = Keyword()
-    rainfall_districts = Keyword()
-    date_opened = Date()
-    coordinates = GeoPoint()
-    last_update_date = Date()
-
-    def save(self):
-        self.meta.id = self.id
-        self.last_updated_date = datetime.now()
-        super().save()
-
-    class Index:
-        name = INDEX_NAME["stations"]
-        settings = {"number_of_shards": 2, "number_of_replicas": 1}

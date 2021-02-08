@@ -5,3 +5,6 @@ __pycache__/
 
 # Data folder
 data/
+
+# ES creds
+config/creds.json

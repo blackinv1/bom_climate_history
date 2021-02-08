@@ -1,4 +1,3 @@
-POST /api/v1/deployments?validate_only=false
 {
   "resources": {
     "elasticsearch": [
