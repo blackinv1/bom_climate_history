@@ -26,10 +26,10 @@ class ES(object):
 
     def __init__(self, config: ESConfig):
         connections.create_connection(
-        cloud_id=config.cloud_id,
-        http_auth=(config.username, config.password),
-        timeout=config.timeout,
-    )
+            cloud_id=config.cloud_id,
+            http_auth=(config.username, config.password),
+            timeout=config.timeout,
+        )
 
     def _hit_to_dict(self, hit):
         """
@@ -41,7 +41,6 @@ class ES(object):
             "_source": hit.to_dict(),
         }
 
-
     def get_all_documents(self, index):
         """
         Retrieve all documents from ES for the provided index
@@ -49,7 +48,7 @@ class ES(object):
         search = Search(index=index)
 
         yield from (hit.to_dict() for hit in search.scan())
-    
+
     def get_all_stations_by_name(self, stations_index="bom_stations"):
         """
         Get all documents from the stations index and tranfrom it into a dict using name as the keys
@@ -57,7 +56,7 @@ class ES(object):
         stations = {}
         for station in self.get_all_documents(stations_index):
             stations[station["name"]] = station
-        
+
         return stations
 
     def bulk_ingestion(self, buffer):

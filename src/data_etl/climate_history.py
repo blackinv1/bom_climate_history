@@ -19,7 +19,9 @@ def load_climate_history(data_dir, file_type=".csv"):
             print(f"Reading file: {file}")
 
             station_name = file.replace("_", " ").lower()
-            with open(f"{root}/{file}", newline="", encoding="ISO-8859-1") as climate_file:
+            with open(
+                f"{root}/{file}", newline="", encoding="ISO-8859-1"
+            ) as climate_file:
                 rows = csv.reader(climate_file, delimiter=",")
 
                 for row in rows:
@@ -29,10 +31,12 @@ def load_climate_history(data_dir, file_type=".csv"):
                     # Skip if not a data row
                     if not row[0] or row[0].strip().lower() not in station_name:
                         continue
-                        
+
                     if len(row) != fields_count:
-                        raise Exception(f"Error: Unexpected number of fields for the provided row: {row}")
-                    
+                        raise Exception(
+                            f"Error: Unexpected number of fields for the provided row: {row}"
+                        )
+
                     record = {}
                     for index, field_name in enumerate(CLIMATE_HISTORY_FIELDS):
                         field_value = row[index].strip()
@@ -46,7 +50,10 @@ def load_climate_history(data_dir, file_type=".csv"):
     print("Finished reading all files")
     return climate_history
 
-def ingest_climate_history(climate_history, es_client, BOMClimateHistory, init_index, batch=1000):
+
+def ingest_climate_history(
+    climate_history, es_client, BOMClimateHistory, init_index, batch=1000
+):
     """
     Ingest the climate history data into ES
     """
@@ -71,11 +78,9 @@ def ingest_climate_history(climate_history, es_client, BOMClimateHistory, init_i
             # Required fields
             date=record["date"],
             station_name=record["station_name"],
-
             # Foreign fields
             station_id=station_id,
             station_coordinates=station_coordinates,
-
             # Data fields
             evapotranspiration=record["evapotranspiration"],
             rain=record["rain"],
@@ -91,12 +96,11 @@ def ingest_climate_history(climate_history, es_client, BOMClimateHistory, init_i
         buffer.append(document)
 
         # Reach the batch size or the last doc
-        if not index % batch or index == record_count-1 :
+        if not index % batch or index == record_count - 1:
             if not index:
                 continue
-            
+
             es_client.bulk_ingestion(buffer)
             buffer.clear()
 
             print(f"Ingested {index+1} out of total {record_count} documents")
-

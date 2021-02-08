@@ -50,6 +50,7 @@ def load_stations(stations_file):
 
     return stations
 
+
 def ingest_stations(stations, BOMStations, init_index):
     """
     Ingest the stations data into ES
@@ -68,5 +69,3 @@ def ingest_stations(stations, BOMStations, init_index):
             coordinates=station["coordinates"],
         )
         document.save()
-
-

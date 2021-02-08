@@ -1,8 +1,8 @@
-
 from datetime import datetime
 from elasticsearch_dsl import Document, Date, Float, Keyword, GeoPoint
 
 from common.common import INDEX_NAME
+
 
 class BOMStations(Document):
     id = Keyword(required=True)
