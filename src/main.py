@@ -46,11 +46,11 @@ def main():
     es_client = ES(es_config)
 
     # Load data from file
-    # stations = load_stations(args.stations_file)
+    stations = load_stations(args.stations_file)
     climate_history = load_climate_history(args.climate_data_root_dir)
 
     # Ingest the data into ES
-    # ingest_stations(stations, BOMStations, init_index)
+    ingest_stations(stations, BOMStations, init_index)
     ingest_climate_history(climate_history, es_client, BOMClimateHistory, init_index)
 
 
