@@ -1,0 +1,16 @@
+
+{
+    "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "6km",
+                    "coordinates" : "-31.9655571, 115.9334036"
+                }
+            }
+        }
+    }
+}

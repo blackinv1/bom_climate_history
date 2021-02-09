@@ -1,0 +1,36 @@
+{
+    "size": 0, 
+    "query": {
+      "bool": {
+        "must": [
+          {
+            "match": {
+              "station_id": "086077"
+            }
+          },
+          {
+            "range": {
+              "maximum_temperature": {
+                "gte": 35
+              }
+            }
+          },
+          {
+            "range": {
+              "date": {
+                "gte": "08/02/2012"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "aggs": {
+      "extreme_date_count_by_year": {
+        "date_histogram": {
+          "field": "date",
+          "calendar_interval": "year"
+        }
+      }
+    }
+  }
