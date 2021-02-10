@@ -10,10 +10,10 @@ This repo contains code that ingests the provided data into a ElasticSearch clus
 
 
 ## Config
-1. `ElasticSearch Cluster credentials`
+1.  ElasticSearch Cluster Credentials
 - create a `creds.json` file in the `config/` follder, and put the `cloud_id`, `username` and `password` in it
 
-1. `BOM Data Folder`
+1. BOM Data Folder
 - create a `data` folder in the root dir of this repo, then extracts the BOM downloads at here
 - BOM Data Download: ftp://ftp2.bom.gov.au/anon/gen/clim_data/IDCKWCDEA0.tgz
 
